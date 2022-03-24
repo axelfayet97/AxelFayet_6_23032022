@@ -4,9 +4,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
+const productsRoutes = require('./routes/product');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config();
+const path = require('path');
 
 // Connexion à Mongo DB
 const login = process.env.DB_PWD;
@@ -33,7 +35,9 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Routes
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
+app.use('api/sauces', productsRoutes);
 
 // Export de l'application express
 module.exports = app;
