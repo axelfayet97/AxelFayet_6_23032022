@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const app = express();
-const login = process.env.DB_PWD;
-
-// Import des routes
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Connexion à Mongo DB
+const login = process.env.DB_PWD;
 mongoose.connect(login, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -34,7 +34,6 @@ app.use(bodyParser.json());
 
 // Routes
 app.use('/api/auth', userRoutes);
-
 
 // Export de l'application express
 module.exports = app;
