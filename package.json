@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config server.js"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
@@ -17,5 +11,19 @@
     "mongoose": "^6.2.8",
     "mongoose-unique-validator": "^3.0.0",
     "nodemon": "^2.0.15"
-  }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axelfayet97/AxelFayet_6_23032022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/axelfayet97/AxelFayet_6_23032022/issues"
+  },
+  "homepage": "https://github.com/axelfayet97/AxelFayet_6_23032022#readme"
 }
