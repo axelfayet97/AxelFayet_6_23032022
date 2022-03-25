@@ -2,10 +2,7 @@ const Sauce = require('../models/Sauces')
 const fs = require('fs');
 
 exports.createSauce = (req, res, next) => {
-    // req.body.thing objet js sous forme de string
     const sauceObject = JSON.parse(req.body.sauce);
-
-    delete sauceObject._id;
     // Nouvel objet Sauce
     const sauce = new Sauce({
         // Opérateur spread donnant tous les champs du body
@@ -13,6 +10,7 @@ exports.createSauce = (req, res, next) => {
         // Génération du nom du fichier de manière dynamique
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
+    console.log(sauce);
     // Methode save dans la bdd
     sauce.save()
         .then(() => res.status(201).json({ message: 'Sauce enregistrée !' }))
@@ -31,8 +29,9 @@ exports.modifySauce = (req, res, next) => {
 };
 
 exports.getAllSauces = (req, res, next) => {
+    console.log('CONTROLLER SAUCE');
     Sauce.find()
-        .then(sauces => res.status(200).json(sauces))
+        .then(sauces => res.status(200).send(sauces))
         .catch(error => res.status(400).json({ error }));
 };
 
@@ -55,4 +54,6 @@ exports.deleteSauce = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
-exports.likeSauce = (req, res, next) => { };
+// exports.likeSauce = (req, res, next) => {
+//     Sauce.findOne({})
+// };

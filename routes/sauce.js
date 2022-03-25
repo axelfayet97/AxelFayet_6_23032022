@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const sauceCtrl = require('../controllers/product');
+const sauceCtrl = require('../controllers/sauce');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
-const { route } = require('./user');
+// const { route } = require('./user');
 
 // Routes gestion de données ici
 // Créer une sauce + image avec Multer
