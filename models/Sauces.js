@@ -15,13 +15,13 @@ const sauceSchema = mongoose.Schema({
     // Image de la sauce
     imageUrl: { type: String, required: true },
     // Nombre sur 10 décrivant la sauce
-    heat: { type: Number, required: true },
+    heat: { type: Number, required: true, default: 1, min: 1, max: 10 },
     // Gestion like/dislike
-    likes: { type: Number, required: true },
-    dislikes: { type: Number, required: true },
-    // Utilisateurs ayant liké/disliké la sauc
-    usersLiked: { type: String, required: true },
-    usersDisliked: { type: String, required: true }
+    likes: { type: Number, required: true, default: 0 },
+    dislikes: { type: Number, required: true, default: 0 },
+    // Utilisateurs ayant liké/disliké la sauce
+    usersLiked: { type: [String], required: true, default: [] },
+    usersDisliked: { type: [String], required: true, default: [] }
 });
 
 // Export du modèle
