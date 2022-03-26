@@ -22,13 +22,23 @@ mongoose.connect(login, {
 app.use(express.json());
 
 // CORS
-app.use(cors());
+var whitelist = ['http://localhost:4200'];
+var corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+};
+
 app.use(bodyParser.json());
 
 // Routes
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
-app.use('/api/sauces', productsRoutes);
+app.use('/images', cors(corsOptions), express.static(path.join(__dirname, 'images')));
+app.use('/api/auth', cors(corsOptions), userRoutes);
+app.use('/api/sauces', cors(corsOptions), productsRoutes);
 
 // Export de l'application express
 module.exports = app;
