@@ -21,7 +21,6 @@ exports.modifySauce = (req, res) => {
         .then(sauce => {
             // On retire l'ancienne image
             const filename = sauce.imageUrl.split('/images/')[1];
-            console.log("sauce : " + sauce, "filename : " + filename);
             fs.unlink(`images/${filename}`, () => {
                 // Modification des données de la sauce
                 const sauceObject = req.file ?
@@ -59,7 +58,6 @@ exports.deleteSauce = (req, res) => {
         .then(sauce => {
             // On retire /images/ du nom du chemin
             const filename = sauce.imageUrl.split('/images/')[1];
-            console.log("sauce : " + sauce, "filename : " + filename);
             fs.unlink(`images/${filename}`, () => {
                 Sauce.deleteOne({ _id: req.params.id })
                     .then(() => res.status(200).json({ message: 'Sauce supprimée !' }))
