@@ -17,16 +17,28 @@ exports.createSauce = (req, res) => {
 };
 
 exports.modifySauce = (req, res) => {
-    const sauceObject = req.file ?
-        {
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : { ...req.body };
-    // Supprimer current image
-    Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: "OK" }))
-        .catch(error => res.status(400).json({ error }));
-
+    Sauce.findOne({ _id: req.params.id })
+        .then(sauce => {
+            // On retire l'ancienne image
+            const filename = sauce.imageUrl.split('/images/')[1];
+            console.log("sauce : " + sauce, "filename : " + filename);
+            fs.unlink(`images/${filename}`, () => {
+                // Modification des données de la sauce
+                const sauceObject = req.file ?
+                    // Si une nouvelle image
+                    {
+                        ...JSON.parse(req.body.sauce),
+                        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                    }
+                    // Sinon
+                    : { ...req.body };
+                // Sauvegarde de la nouvelle sauce
+                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+                    .catch(error => res.status(400).json({ error }));
+            });
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
 exports.getAllSauces = (req, res) => {
@@ -60,7 +72,7 @@ exports.deleteSauce = (req, res) => {
 exports.likeSauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then(likeControl => {
-            console.log(req.body);
+            // console.log(req.body);
             const thumbController = req.body.like;
             // Si like
             if (thumbController == 1) {
