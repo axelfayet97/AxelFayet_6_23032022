@@ -1,4 +1,3 @@
-node_modules
-.env
-Images
-Web-Developper-P6
+/node_modules
+/.env
+/Images
