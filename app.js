@@ -1,4 +1,4 @@
-// Import d'express, mongoose & body parser
+// Import d'express, cors, mongoose, body parser, routes, dotenv
 const { json } = require('express');
 const express = require('express');
 const cors = require('cors');
@@ -19,6 +19,7 @@ mongoose.connect(login, {
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
+// Analyse Corps de la requête
 app.use(express.json());
 
 // CORS
@@ -27,6 +28,7 @@ var corsOptions = {
     optionsSuccessStatus: 200
 }
 
+// Extrait les données du body de la requête et les transforme en objet JS "req.body"
 app.use(bodyParser.json());
 
 // Routes

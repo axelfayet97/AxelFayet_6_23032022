@@ -8,7 +8,7 @@ const { route } = require('./user');
 // Routes gestion de données ici
 // Créer une sauce + image avec Multer
 router.post('/', auth, multer, sauceCtrl.createSauce);
-// Modifier une sauce
+// Modifier une sauce + image avec Multer
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 // Récupère l'array de sauce
 router.get('/', auth, sauceCtrl.getAllSauces);

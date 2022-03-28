@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
         // Dossier de destination
         callback(null, 'images');
     },
+    // Génération du nom du fichier
     filename: (req, file, callback) => {
         // Préviens de l'écriture du fichier avec l'extension a l'intérieur
         const name = file.originalname.split(/[.][a-zA-Z]{2,}$/mg).join('_');
