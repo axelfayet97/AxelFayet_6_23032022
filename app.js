@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
-const productsRoutes = require('./routes/sauce');
+const saucesRoute = require('./routes/sauce');
 const app = express();
 require('dotenv').config();
 const path = require('path');
@@ -22,23 +22,17 @@ mongoose.connect(login, {
 app.use(express.json());
 
 // CORS
-// var whitelist = ['http://localhost:4200'];
-// var corsOptions = {
-//     origin: function (origin, callback) {
-//         if (whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error('Not allowed by CORS'))
-//         }
-//     }
-// };
-app.use(cors());
+var corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200
+}
+
 app.use(bodyParser.json());
 
 // Routes
-app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
-app.use('/api/sauces', productsRoutes);
+app.use('/images', cors(corsOptions), express.static(path.join(__dirname, 'images')));
+app.use('/api/auth', cors(corsOptions), userRoutes);
+app.use('/api/sauces', cors(corsOptions), saucesRoute);
 
 // Export de l'application express
 module.exports = app;
