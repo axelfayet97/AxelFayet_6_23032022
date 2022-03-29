@@ -1,4 +1,4 @@
-const Sauce = require('../models/Sauces')
+const Sauce = require('../models/Sauces');
 const fs = require('fs');
 
 // Création de sauce
@@ -6,7 +6,7 @@ exports.createSauce = (req, res) => {
     const sauceObject = JSON.parse(req.body.sauce);
     // Nouvel objet Sauce
     const sauce = new Sauce({
-        // Opérateur spread donnant tous les champs du body
+        // Récupération des données
         ...sauceObject,
         // Génération du nom du fichier de manière dynamique
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -61,7 +61,6 @@ exports.deleteSauce = (req, res) => {
     // Trouve l'id de la sauce à delete
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
-            // On retire /images/ du nom du chemin
             const filename = sauce.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
                 Sauce.deleteOne({ _id: req.params.id })
@@ -80,6 +79,7 @@ exports.likeSauce = (req, res) => {
     switch (likeControl) {
         //SI LIKE = 1
         case 1:
+            // Mise à jour de la sauce, mongoose incrémente les likes de 1 et met l'ID utilisateur dans une array
             Sauce.updateOne({ _id: sauceId }, { $inc: { likes: 1 }, $push: { usersLiked: userId } })
                 .then(() => res.status(200).json({ message: 'Sauce likée !' }))
                 .catch(error => (res.status(500).json({ error })));
