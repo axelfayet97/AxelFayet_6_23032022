@@ -1,6 +1,7 @@
 // Import d'express, cors, mongoose, body parser, routes, dotenv, helmet
 const { json } = require('express');
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -20,21 +21,28 @@ mongoose.connect(login, {
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Analyse Corps de la requête
-const app = express();
+app.use(
+    helmet({
+        // Évite l'erreur : BLOCKED_BY_RESPONSE.NotSameOrigin 200
+        // crossOriginResourcePolicy: false
+    })
+);
 app.use(express.json());
-app.use(helmet());
 app.use(bodyParser.json());
 
 // CORS
 var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200
-}
+};
+
+app.use(cors(corsOptions));
+
 
 // Routes
-app.use('/images', cors(corsOptions), express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', cors(corsOptions), userRoutes);
-app.use('/api/sauces', cors(corsOptions), saucesRoute);
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/api/auth', userRoutes);
+app.use('/api/sauces', saucesRoute);
 
 // Export de l'application express
 module.exports = app;
