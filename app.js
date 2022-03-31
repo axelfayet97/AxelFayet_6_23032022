@@ -21,12 +21,6 @@ mongoose.connect(login, {
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // Analyse Corps de la requête
-app.use(
-    helmet({
-        // Évite l'erreur : BLOCKED_BY_RESPONSE.NotSameOrigin 200
-        // crossOriginResourcePolicy: false
-    })
-);
 app.use(express.json());
 app.use(bodyParser.json());
 
@@ -36,8 +30,8 @@ var corsOptions = {
     optionsSuccessStatus: 200
 };
 
+app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(cors(corsOptions));
-
 
 // Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
