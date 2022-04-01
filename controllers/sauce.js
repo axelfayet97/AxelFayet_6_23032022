@@ -21,23 +21,23 @@ exports.createSauce = (req, res) => {
 exports.modifySauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
-            // On retire l'ancienne image
-            const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                // Modification des données de la sauce
-                const sauceObject = req.file ?
-                    // Si une nouvelle image
-                    {
-                        ...JSON.parse(req.body.sauce),
-                        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-                    }
-                    // Sinon
-                    : { ...req.body };
-                // Sauvegarde de la nouvelle sauce
-                Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
-                    .catch(error => res.status(400).json({ error }));
-            });
+            // On remplace le fichier de l'ancienne image par le nouveau
+            if (req.file) {
+                const filename = sauce.imageUrl.split('/images/')[1];
+                fs.unlinkSync(`images/${filename}`);
+            }
+            const sauceObject = req.file ?
+                // Si une nouvelle image
+                {
+                    ...JSON.parse(req.body.sauce),
+                    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                }
+                // Sinon
+                : { ...req.body };
+            // Sauvegarde de la nouvelle sauce
+            Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+                .catch(error => res.status(400).json({ error }));
         })
         .catch(error => res.status(500).json({ error }));
 };
@@ -86,7 +86,7 @@ exports.likeSauce = (req, res) => {
             break;
         // SI DISLIKE = -1
         case -1:
-            Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: -1 }, $push: { usersDisliked: userId } })
+            Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: 1 }, $push: { usersDisliked: userId } })
                 .then(() => res.status(200).json({ message: 'Sauce dislikée !' }))
                 .catch(error => (res.status(500).json({ error })));
             break;
@@ -101,11 +101,12 @@ exports.likeSauce = (req, res) => {
                             .catch(error => (res.status(500).json({ error })));
                         // Si l'utilisateur retire un dislike
                     } else {
-                        Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: 1 }, $pull: { usersDisliked: userId } })
+                        Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: -1 }, $pull: { usersDisliked: userId } })
                             .then(() => res.status(200).json({ message: 'Dislike retiré' }))
                             .catch(error => (res.status(500).json({ error })));
                     }
                 });
             break;
+        // default: ;
     };
 };
