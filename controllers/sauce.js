@@ -77,7 +77,7 @@ exports.LikeOrDislikeSauce = (req, res) => {
     const sauceId = req.params.id;
     const likeControl = req.body.like;
     switch (likeControl) {
-        //SI LIKE = 1
+        // SI LIKE = 1
         case 1:
             // Mise à jour de la sauce, mongoose incrémente les likes de 1 et met l'ID utilisateur dans une array
             Sauce.updateOne({ _id: sauceId }, { $inc: { likes: 1 }, $push: { usersLiked: userId } })
@@ -100,7 +100,7 @@ exports.LikeOrDislikeSauce = (req, res) => {
                             .then(() => res.status(200).json({ message: 'Like retiré' }))
                             .catch(error => (res.status(500).json({ error })));
                         // Si l'utilisateur retire un dislike
-                    } else {
+                    } else if (sauce.usersDisliked.includes(userId)) {
                         Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: -1 }, $pull: { usersDisliked: userId } })
                             .then(() => res.status(200).json({ message: 'Dislike retiré' }))
                             .catch(error => (res.status(500).json({ error })));
