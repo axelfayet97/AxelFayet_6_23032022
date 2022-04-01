@@ -81,24 +81,24 @@ exports.LikeOrDislikeSauce = (req, res) => {
             // SI LIKE = 1
             case 1:
                 // Si l'utilisateur ne figure pas dans la BDD
-                if (!sauce.usersLiked.includes(userId)) {
+                if (!sauce.usersLiked.includes(userId) && !sauce.usersDisliked.includes(userId)) {
                     // Mise à jour de la sauce, mongoose incrémente les likes de 1 et met l'ID utilisateur dans une array
                     Sauce.updateOne({ _id: sauceId }, { $inc: { likes: 1 }, $push: { usersLiked: userId } })
                         .then(() => res.status(200).json({ message: 'Sauce likée !' }))
                         .catch(error => (res.status(500).json({ error })));
-                    break;
                 } else { res.status(500).json({ error: "Non autorisé " }) }
+                break;
             // SI DISLIKE = -1
             case -1:
                 // Si l'utilisateur ne figure pas dans la BDD
-                if (!sauce.usersDisliked.includes(userId)) {
+                if (!sauce.usersDisliked.includes(userId) && !sauce.usersLiked.includes(userId)) {
                     Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: 1 }, $push: { usersDisliked: userId } })
                         .then(() => res.status(200).json({ message: 'Sauce dislikée !' }))
                         .catch(error => (res.status(500).json({ error })));
-                    break;
                 } else { res.status(500).json({ error: "Non autorisé " }) }
+                break;
             // RETOUR DEFAUT
-            default:
+            case 0:
                 Sauce.findOne({ _id: sauceId })
                     .then(sauce => {
                         // Si l'utilisateur retire un like
@@ -111,8 +111,11 @@ exports.LikeOrDislikeSauce = (req, res) => {
                             Sauce.updateOne({ _id: sauceId }, { $inc: { dislikes: -1 }, $pull: { usersDisliked: userId } })
                                 .then(() => res.status(200).json({ message: 'Dislike retiré' }))
                                 .catch(error => (res.status(500).json({ error })));
-                        }
+                        } else { res.status(500).json({ error: "Non autorisé " }) }
                     })
+                break;
+            default:
+                res.status(500).json({ error: "Non autorisé " })
                 break;
         };
     })
