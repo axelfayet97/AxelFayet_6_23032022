@@ -1,10 +1,11 @@
-// Import d'express, cors, mongoose, body parser, routes, dotenv, helmet
+// Import d'express, cors, mongoose, body parser, routes, dotenv, helmet, no cache
 const { json } = require('express');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const nocache = require('nocache');
 const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const saucesRoute = require('./routes/sauce');
@@ -31,7 +32,9 @@ mongoose.connect(login, {
 app.use(express.json());
 app.use(bodyParser.json());
 
+// Sécurité helmet et désactivation du cache
 app.use(helmet({ crossOriginResourcePolicy: false }));
+app.use(nocache());
 
 // Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
