@@ -72,7 +72,7 @@ exports.deleteSauce = (req, res) => {
 };
 
 // Gestion like / dislike d'une sauce
-exports.likeSauce = (req, res) => {
+exports.LikeOrDislikeSauce = (req, res) => {
     const userId = req.body.userId;
     const sauceId = req.params.id;
     const likeControl = req.body.like;
@@ -91,7 +91,7 @@ exports.likeSauce = (req, res) => {
                 .catch(error => (res.status(500).json({ error })));
             break;
         // RETOUR DEFAUT
-        case 0:
+        default:
             Sauce.findOne({ _id: sauceId })
                 .then(sauce => {
                     // Si l'utilisateur retire un like
@@ -107,6 +107,5 @@ exports.likeSauce = (req, res) => {
                     }
                 });
             break;
-        // default: ;
     };
 };
