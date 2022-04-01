@@ -5,7 +5,7 @@ const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
     'image/png': 'png',
-    'image/webp': 'png'
+    'image/webp': 'webp'
 };
 
 // Enresitrement dans constante storage
