@@ -11,6 +11,13 @@ const saucesRoute = require('./routes/sauce');
 const path = require('path');
 require('dotenv').config();
 
+// CORS
+var corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 // Connexion à Mongo DB
 const login = process.env.DB_PWD;
 mongoose.connect(login, {
@@ -24,14 +31,7 @@ mongoose.connect(login, {
 app.use(express.json());
 app.use(bodyParser.json());
 
-// CORS
-var corsOptions = {
-    origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200
-};
-
 app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(cors(corsOptions));
 
 // Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
