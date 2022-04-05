@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
+const infosValidator = require('../middleware/validator');
 
 // Création d'un schéma de données
 const sauceSchema = mongoose.Schema({
     // Identifiant de l'utilisateur ayant créé la sauce
     userId: { type: String, required: true },
     // Nom de la sauce
-    name: { type: String, required: true },
+    name: { type: String, required: true, validate: infosValidator },
     // Nom du fabricant de la sauce
-    manufacturer: { type: String, required: true },
+    manufacturer: { type: String, required: true, validate: infosValidator },
     // Description de la sauce
-    description: { type: String, required: true },
+    description: { type: String, required: true, validate: infosValidator },
     // Principal ingrédient de la sauce
-    mainPepper: { type: String, required: true },
+    mainPepper: { type: String, required: true, validate: infosValidator },
     // Image de la sauce
     imageUrl: { type: String, required: true },
     // Nombre sur 10 décrivant la sauce
