@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const saucesRoute = require('./routes/sauce');
 const path = require('path');
+const loginLimiter = require('./middleware/authentification-validator')
 require('dotenv').config();
 
 // CORS
@@ -38,7 +39,7 @@ app.use(nocache());
 
 // Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', loginLimiter, userRoutes);
 app.use('/api/sauces', saucesRoute);
 
 // Export de l'application express
