@@ -20,6 +20,8 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Paramètre mongoose permettant de run les test de validation à la modification de la sauce
+mongoose.set('runValidators', true);
 // Connexion à Mongo DB
 const login = process.env.DB_PWD;
 mongoose.connect(login, {
