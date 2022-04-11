@@ -16,7 +16,6 @@ exports.inputValidator = [
 ];
 
 // Validation pour le champs input Main Pepper
-
 exports.pepperValidator = [
     validate({
         validator: 'isLength',

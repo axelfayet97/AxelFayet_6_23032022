@@ -1,4 +1,4 @@
-// Import d'express, cors, mongoose, body parser, routes, dotenv, helmet, no cache
+// Import d'express, cors, mongoose, body parser, routes, dotenv, helmet, no cache, login limiter
 const { json } = require('express');
 const express = require('express');
 const app = express();
@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/user');
 const saucesRoute = require('./routes/sauce');
 const path = require('path');
-const loginLimiter = require('./middleware/authentification-validator')
+const loginLimiter = require('./middleware/authentification-validator');
 require('dotenv').config();
 
 // CORS
