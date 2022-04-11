@@ -20,27 +20,27 @@ exports.createSauce = (req, res) => {
 // Modification de la sauce
 exports.modifySauce = (req, res) => {
     Sauce.findOne({ _id: req.params.id })
-    .then(sauce => {
-        // On remplace le fichier de l'ancienne image par le nouveau
-        if (req.file) {
-            const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlinkSync(`images/${filename}`);
-        }
-        const sauceObject = req.file ?
-        // Si une nouvelle image
-            {
-            // On remplace l'image de la sauce
-            ...JSON.parse(req.body.sauce),
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        }
-        // Sinon on ne met à jour que ses données
-        : { ...req.body };
-        // Sauvegarde de la nouvelle sauce
-        Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
-        .catch(error => res.status(400).json({ error }));
-    })
-        .catch(error => res.status(500).json({ error, message: error + "Veuillez réessayer plus tard." }));
+        .then(sauce => {
+            // On remplace le fichier de l'ancienne image par le nouveau
+            if (req.file) {
+                const filename = sauce.imageUrl.split('/images/')[1];
+                fs.unlinkSync(`images/${filename}`);
+            }
+            const sauceObject = req.file ?
+                // Si une nouvelle image
+                {
+                    // On remplace l'image de la sauce
+                    ...JSON.parse(req.body.sauce),
+                    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                }
+                // Sinon on ne met à jour que ses données
+                : { ...req.body };
+            // Sauvegarde de la nouvelle sauce
+            Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+                .then(() => res.status(200).json({ message: "Sauce modifiée !" }))
+                .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
 };
 
 // Affichage de toutes les sauces
