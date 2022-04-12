@@ -9,7 +9,7 @@
 	<em>Node est nécéssaire au fonctionnement de l'application, pour l'installer, rendes-vous <a href="https://nodejs.org/en/download/">ici</a></em>
   <p>Tout d'abord, clonez ce repo en local sur votre machine, puis à partir de votre éditeur de code rendez vous dans le dossier cloné pour y effectuer
 	l'installation en saisissant <code>npm install</code></p>
-	<p><strong>Le dossier "Images" étant ignoré lors de l'envoi sur github, il vous faudra le créer à la racine du dossier backend</strong></p>
+	<p><strong>Le dossier "Images" étant ignoré lors de l'envoi sur github, il vous faudra le créer à la racine du dossier backend.</strong></p>
 	<p><strong>Avant de lancer le serveur</strong> il vous faudra créer votre propre fichier <code>.env</code> à la racine du dossier backend. Vous pouvez pour cela suivre l'exemple du fichier .env-type situé lui aussi à la racine du repo.</p>
 	<p>Une fois votre fichier .env correctement paramétré vous pourrez lancer le serveur à l'aide de la commande <code>nodemon server</code></p>
 	<strong><em>Par défaut le serveur utilisera le port <a href="http://localhost:3000">3000</a></em></strong>
