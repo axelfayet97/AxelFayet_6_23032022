@@ -20,4 +20,5 @@
 	<p>Enfin, lancer la commande <code>ng serve</code> ou <code>npm start</code> afin de démarrer le serveur frontend. Par défaut, il se lancera sur le port <a href="http://localhost:4200">4200</a> de votre machine.</p>
 	<strong><em>Lors de l'installation des dépendances, la console peut vous signaler des vulnérabilités. Il est recommander de lancer la commande <code>npm audit fix</code> afin d'assurer le bon fonctionnement du serveur et du frontend</em></strong>
 
+
 <p>Pour toutes questions, vous pouvez me contacter dirctement via mon adresse <a href="mailto:axel.fayet97@gmail.com">mail</a>.</p>
