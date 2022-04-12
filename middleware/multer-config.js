@@ -1,6 +1,6 @@
 const multer = require('multer');
 
-// Re-génération de l'extension du fichier
+// Génération de l'extension du fichier
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
