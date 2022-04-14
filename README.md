@@ -4,7 +4,7 @@
   <p>Bienvenue sur le repo contenant le serveur du site en développement Piiquante !</p>
 <h2>Pré-requis et technologies utilisées</h2>
   <p>Ce serveur à été développé à l'aide de JavaScript. Il utilise <a href="https://nodejs.org/">Node.js</a> et son infrastructure <a href="https://expressjs.com/fr/">Express</a> pour fonctionner.
-  La base de données utilisée pour la phase de développement est hébergée sur <a href="https://www.mongodb.com/">MongoDB Atlas</a> et est géré avec la bibliothèque de programmation <a href="https://mongoosejs.com/">Mongoose</a>.</p>
+  La base de données utilisée pour la phase de développement est hébergée sur <a href="https://www.mongodb.com/">MongoDB Atlas</a> et est gérée avec la bibliothèque de programmation <a href="https://mongoosejs.com/">Mongoose</a>.</p>
 <h3>Installation du backend</h3>
 	<em>Node est nécéssaire au fonctionnement de l'application, pour l'installer, rendes-vous <a href="https://nodejs.org/en/download/">ici</a></em>
   <p>Tout d'abord, clonez ce repo en local sur votre machine, puis à partir de votre éditeur de code rendez vous dans le dossier cloné pour y effectuer
