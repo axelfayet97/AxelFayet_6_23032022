@@ -10,7 +10,7 @@ const sauceSchema = mongoose.Schema({
     // Nom du fabricant de la sauce
     manufacturer: { type: String, required: true, validate: validator.inputValidator },
     // Description de la sauce
-    description: { type: String, required: true, validate: validator.inputValidator },
+    description: { type: String, required: true },
     // Principal ingrédient de la sauce
     mainPepper: { type: String, required: true, validate: validator.inputValidator },
     // Image de la sauce
